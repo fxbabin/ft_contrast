@@ -17,11 +17,31 @@
 #include <stdio.h>
 #include "../libft/includes/libft.h"
 
-typedef struct  s_env 
+typedef struct      s_queue
 {
-    int         contrast;
-    int         input_fd;
-    int         output_fd;
-}               t_env;
+    char            *chunk;
+    struct s_queue  *next; 
+}                   t_queue;
+
+typedef struct      s_env 
+{
+    int             contrast;
+    int             input_fd;
+    int             output_fd;
+    int             max_contrast;
+    int             line_len;
+    t_queue         *queue;
+}                   t_env;
+
+void                ft_usage(void);
+int                 check_arguments(int argc, char **argv, t_env *env);
+void                contrast_chunk(t_env *env, char **chunk);
+void                process_file(t_env *env);
+
+//int                 ft_contrast(t_env *env, int nb);
+void		        ft_err_exit(char *str);
+void	            ft_enqueue(t_queue **queue, char *chunk);
+char	            *ft_dequeue(t_queue **queue);
+void				ft_qdel(t_queue **queue);
 
 #endif

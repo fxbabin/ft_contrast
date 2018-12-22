@@ -13,7 +13,7 @@
 NAME			=	ft_contrast
 PUSH_SWAP		=   push_swap
 
-FNT				=	ft_contrast 
+FNT				=	ft_contrast ft_queue contrast read_content check
 
 CC				=	gcc
 FLAGS			=	-Wall -Werror -Wextra
