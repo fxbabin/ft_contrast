@@ -47,7 +47,7 @@ char    *read_chunk(t_env *env, char *buff, int ret)
     while(ft_isdigit(buff[ret - i]))
         i++;
     lseek(env->input_fd, -i, SEEK_CUR);
-    buff[ret - i + 1] = 0;
+    buff[ret - i] = 0;
     if (!(chunk = (char*)ft_memalloc(ret * sizeof(char))))
         ft_err_exit("read_chunk : malloc error");
     ft_strcpy(chunk, buff);
@@ -58,11 +58,11 @@ char    *read_chunk(t_env *env, char *buff, int ret)
 void    process_queue(t_env *env, t_queue **queue)
 {
     char    *tmp;
-    int     i = 0;
+    //int     i = 0;
 
     while((tmp = ft_dequeue(queue)))
     {
-        ft_printf("%d\n", i++);
+        //ft_printf("%d\n", i++);
         contrast_chunk(env, &tmp);
         ft_dprintf(env->output_fd, "%s", tmp);
     }
