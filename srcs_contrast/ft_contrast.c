@@ -1,0 +1,72 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_contrast.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fbabin <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/12/21 21:08:02 by fbabin            #+#    #+#             */
+/*   Updated: 2018/12/21 21:08:04 by fbabin           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+
+#include "ft_tpool.h"
+
+void    ft_usage(void)
+{
+    ft_printf("usage: ./ft_contrast -f [input.pgm] -c [contrast_level] -o [output.pgm]\n");
+    exit(-1);
+}
+
+int     check_arguments(int argc, char **argv, t_env *env)
+{
+    int     i;
+
+    i = 0;
+    while (++i < argc - 1)
+    {
+        ft_printf("%s\n", argv[i]);
+        if (ft_strequ(argv[i], "-f"))
+            env->input_fd = open(argv[i+1], O_RDONLY);
+        if (ft_strequ(argv[i], "-c"))
+        {
+            if ft_isdigit(argv[i+1])
+                env->contrast = ft_atoi(argv[i+1]);
+            else
+                return(0);
+        }
+        if (ft_strequ(argv[i], "-o"))
+            env->output_fd = open(argv[i+1], O_WRONLY | O_CREAT);
+    }
+    if (env->input_fd < 0 || env->output_fd < 0)
+        return(0);
+    if (env->contrast < 0 || env->contrast > 100)
+        return(0);
+    return(1);
+}
+
+int     main(int argc, char **argv)
+{
+    t_env   env;
+
+    env.contrast = -1;
+    env.input_fd = -1;
+    env.output_fd = -1;
+    if (argc != 7)
+        ft_usage();
+    if (!check_arguments(argc, argv, &env))
+        ft_usage();
+    ft_printf("%s\n", argv[1]);
+    return(0);
+}
+
+/*
+pushback
+getfront
+
+gnl
+if == 255
+
+
+*/
