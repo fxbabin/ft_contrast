@@ -17,6 +17,8 @@
 # include <pthread.h>
 # include "../libft/includes/libft.h"
 
+# define NB_THREADS 4
+
 typedef struct		s_queue
 {
 	char			*chunk;
@@ -30,6 +32,9 @@ typedef struct		s_env
 	int				output_fd;
 	int				max_contrast;
 	int				line_len;
+	pthread_t 		callThd[NB_THREADS];
+    pthread_mutex_t mutexsum;
+    pthread_attr_t 	attr;
 	t_queue			*queue;
 }					t_env;
 
