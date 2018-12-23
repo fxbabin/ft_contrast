@@ -26,7 +26,7 @@ void	ft_putnbr_str(char *str, int nb, int *idx)
 	}
 }
 
-char	*contrast_chunk(t_env *env, char *chunk)
+void	contrast_chunk(t_env *env, char *chunk)
 {
 	char	*new;
 	int		nb;
@@ -52,5 +52,6 @@ char	*contrast_chunk(t_env *env, char *chunk)
 		y++;
 	}
 	ft_strdel(&chunk);
-	return (new);
+	ft_dprintf(env->output_fd, "%s", new);
+	ft_strdel(&new);
 }

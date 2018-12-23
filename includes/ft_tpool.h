@@ -14,6 +14,7 @@
 # define FT_TPOOL_H
 
 # include <stdio.h>
+# include <pthread.h>
 # include "../libft/includes/libft.h"
 
 typedef struct		s_queue
@@ -34,7 +35,7 @@ typedef struct		s_env
 
 void				ft_usage(void);
 int					check_arguments(int argc, char **argv, t_env *env);
-char				*contrast_chunk(t_env *env, char *chunk);
+void				contrast_chunk(t_env *env, char *chunk);
 void				process_file(t_env *env);
 void				ft_err_exit(char *str);
 void				ft_enqueue(t_queue **queue, char *chunk);

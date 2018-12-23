@@ -11,9 +11,23 @@
 # **************************************************************************** #
 
 NAME			=	ft_contrast
-PUSH_SWAP		=   push_swap
+NAME2			=   ft_contrast_th
 
-FNT				=	ft_contrast ft_queue contrast read_content check
+COMMON 			=	ft_queue contrast read_content check
+CONT			=	ft_contrast
+CONTH			=	ft_contrast_th
+
+
+SRC_COM			=	srcs_contrast
+SRC				=	$(patsubst %, $(SRC_COM)/%.c, $(COMMON))
+
+SRC_CONT   		=	srcs_contrast
+SRC_C 			=   $(patsubst %, $(SRC_CONT)/%.c, $(CONT))
+SRC_C			+=  $(SRC)
+
+SRC_CONTH   	=	srcs_contrast_th
+SRC_CTH 		=   $(patsubst %, $(SRC_CONTH)/%.c, $(CONTH))
+SRC_CTH			+=  $(SRC)
 
 CC				=	gcc
 FLAGS			=	-Wall -Werror -Wextra
@@ -22,8 +36,9 @@ INCLUDES		=	includes
 SRC_DIR			=	srcs_contrast
 OBJ_DIR			=	obj
 
-SRC				=	$(patsubst %, $(SRC_DIR)/%.c, $(FNT))
-OBJ				=	$(patsubst %, $(OBJ_DIR)/%.o, $(FNT))
+OBJS_C			=	$(SRC_C:.c=.o)
+OBJS_CTH		=	$(SRC_CTH:.c=.o)
+
 _LIBFT			=	libft.a
 LIB_DIR			= 	libft
 LIB 			= 	$(patsubst %, $(LIB_DIR)/, $(_LIBFT))
@@ -35,17 +50,21 @@ _GREEN=\x1b[32m
 _YELLOW=\x1b[33m
 _END=\x1b[0m
 
-all: lib $(HEADER) $(NAME)
+all: lib $(HEADER) $(NAME) $(NAME2)
 
-$(NAME): $(LIB) $(OBJ)
-		@$(CC) -fsanitize=address $(CFLAGS) -o $(NAME) $(OBJ) -L$(LIB_DIR) -lft
+$(NAME): $(LIB) $(OBJS_C)
+		@$(CC) -fsanitize=address $(CFLAGS) -o $(NAME) $(OBJS_C) -L$(LIB_DIR) -lft
+		@echo $@ ": $(_GREEN)Done$(_END)"
+
+$(NAME2): $(LIB) $(OBJS_CTH)
+		@$(CC) -fsanitize=address $(CFLAGS) -o $(NAME2) $(OBJS_CTH) -L$(LIB_DIR) -lft
 		@echo $@ ": $(_GREEN)Done$(_END)"
 
 $(OBJ_DIR):
 		@mkdir -p $@
 		@echo $@ ": $(_GREEN)Done$(_END)"
 
-$(OBJ_DIR)/%.o : $(SRC_DIR)/%.c $(INCLUDES)/ft_tpool.h | $(OBJ_DIR)
+%.o : %.c $(INCLUDES)/ft_tpool.h
 		@$(CC) $(CFLAGS) -o $@ -c $< -I $(INCLUDES)
 		@echo $@ ": $(_GREEN)Done$(_END)"
 
@@ -54,12 +73,14 @@ lib:
 
 clean:
 		@make fclean -C $(LIB_DIR)
-		@/bin/rm -f $(OBJ)
+		@/bin/rm -f $(OBJS_C)
+		@/bin/rm -f $(OBJS_CTH)
 		@/bin/rm -rf $(OBJ_DIR)
 		@echo $@ ": $(_GREEN)Done$(_END)"
 
 fclean: clean
 		@/bin/rm -f $(NAME)
+		@/bin/rm -f $(NAME2)
 		@echo $@ ": $(_GREEN)Done$(_END)"
 
 re: fclean all
