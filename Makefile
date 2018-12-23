@@ -35,7 +35,7 @@ _END=\x1b[0m
 all: $(NAME)
 
 $(NAME): $(OBJ)
-		@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) -L$(LIB_DIR) -lft
+		@$(CC) -g3 -fsanitize=address $(CFLAGS) -o $(NAME) $(OBJ) -L$(LIB_DIR) -lft
 		@echo $@ ": $(_GREEN)Done$(_END)"
 
 $(OBJ_DIR):

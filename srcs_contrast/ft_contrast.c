@@ -28,10 +28,7 @@ int     main(int argc, char **argv)
         ft_usage();
     ft_printf("ici\n");
     process_file(&env);
-
-
     close(env.input_fd);
-
     ft_qdel(&(env.queue));
     return(0);
 }

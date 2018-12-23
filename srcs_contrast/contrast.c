@@ -26,30 +26,31 @@ void	ft_putnbr_str(char *str, int nb, int *idx)
     }
 }
 
-void    contrast_chunk(t_env *env, char **chunk)
+char    *contrast_chunk(t_env *env, char *chunk)
 {
-    char    *tmp;
     char    *new;
     int     nb;
     int     i;
+    int     y;
 
     i = -1;
-    tmp = *chunk;
-    if (!(new = (char*)ft_memalloc(ft_strlen(tmp))))
+    y = -1;
+    //tmp = chunk;
+    if (!(new = (char*)ft_memalloc(ft_strlen(chunk))))
         ft_err_exit("read_chunk : malloc error");
-    while(*tmp)
+    while(chunk[++y])
     {
         nb = 0;
-        if (ft_isdigit(*tmp))
+        if (ft_isdigit(chunk[y]))
         {
-            while(ft_isdigit(*tmp))
-                nb = nb * 10 + (*(tmp++) - '0');
-            //if (*(tmp - 1) == '0' || nb > 0)
+            while(ft_isdigit(chunk[y]))
+                nb = nb * 10 + (chunk[y++] - '0');
+            y -= 1;
             ft_putnbr_str(new, (nb * (env->contrast / 100.0)), &i);
         }
         else
-            new[++i] = *(tmp++);
+            new[++i] = chunk[y];
     }
-    ft_strdel(chunk);
-    *chunk = new;
+    ft_strdel(&chunk);
+    return(new);
 }

@@ -35,7 +35,7 @@ typedef struct      s_env
 
 void                ft_usage(void);
 int                 check_arguments(int argc, char **argv, t_env *env);
-void                contrast_chunk(t_env *env, char **chunk);
+char                *contrast_chunk(t_env *env, char *chunk);
 void                process_file(t_env *env);
 
 //int                 ft_contrast(t_env *env, int nb);

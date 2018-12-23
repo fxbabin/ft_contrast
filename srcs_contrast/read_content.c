@@ -63,7 +63,7 @@ void    process_queue(t_env *env, t_queue **queue)
     while((tmp = ft_dequeue(queue)))
     {
         //ft_printf("%d\n", i++);
-        contrast_chunk(env, &tmp);
+        tmp = contrast_chunk(env, tmp);
         ft_dprintf(env->output_fd, "%s", tmp);
     }
 }
@@ -83,6 +83,9 @@ void    process_file(t_env *env)
     while((ret = read(env->input_fd, buff, BUF_SIZE)) > 0)
     {
         chunk = read_chunk(env, buff, ret);
+        chunk = contrast_chunk(env, chunk);
+        //ft_dprintf(env->output_fd, "%s", chunk);
+        //free(chunk);
         //ft_printf("%s", chunk);
         ft_enqueue(&chunk_queue, chunk);
     }
