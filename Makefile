@@ -24,7 +24,10 @@ OBJ_DIR			=	obj
 
 SRC				=	$(patsubst %, $(SRC_DIR)/%.c, $(FNT))
 OBJ				=	$(patsubst %, $(OBJ_DIR)/%.o, $(FNT))
-LIB_DIR			= libft
+_LIBFT			=	libft.a
+LIB_DIR			= 	libft
+LIB 			= 	$(patsubst %, $(LIB_DIR)/, $(_LIBFT))
+HEADER			= 	$(INCLUDES)/ft_tpool.h
 
 #COLORS
 _CYAN=\x1b[36m
@@ -32,10 +35,10 @@ _GREEN=\x1b[32m
 _YELLOW=\x1b[33m
 _END=\x1b[0m
 
-all: $(NAME)
+all: lib $(HEADER) $(NAME)
 
-$(NAME): $(OBJ)
-		@$(CC) -g3 -fsanitize=address $(CFLAGS) -o $(NAME) $(OBJ) -L$(LIB_DIR) -lft
+$(NAME): $(LIB) $(OBJ)
+		@$(CC) -fsanitize=address $(CFLAGS) -o $(NAME) $(OBJ) -L$(LIB_DIR) -lft
 		@echo $@ ": $(_GREEN)Done$(_END)"
 
 $(OBJ_DIR):
@@ -46,7 +49,11 @@ $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c $(INCLUDES)/ft_tpool.h | $(OBJ_DIR)
 		@$(CC) $(CFLAGS) -o $@ -c $< -I $(INCLUDES)
 		@echo $@ ": $(_GREEN)Done$(_END)"
 
+lib:
+		@make -C $(LIB_DIR)
+
 clean:
+		@make fclean -C $(LIB_DIR)
 		@/bin/rm -f $(OBJ)
 		@/bin/rm -rf $(OBJ_DIR)
 		@echo $@ ": $(_GREEN)Done$(_END)"
