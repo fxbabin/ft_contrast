@@ -50,7 +50,7 @@ _GREEN=\x1b[32m
 _YELLOW=\x1b[33m
 _END=\x1b[0m
 
-all: lib $(HEADER) $(NAME) $(NAME2)
+all: libft/libft.a $(HEADER) $(NAME) $(NAME2)
 
 $(NAME): $(LIB) $(OBJS_C)
 		@$(CC) -fsanitize=address $(CFLAGS) -o $(NAME) $(OBJS_C) -L$(LIB_DIR) -lft
@@ -68,7 +68,7 @@ $(OBJ_DIR):
 		@$(CC) $(CFLAGS) -o $@ -c $< -I $(INCLUDES)
 		@echo $@ ": $(_GREEN)Done$(_END)"
 
-lib:
+libft/libft.a:
 		@make -C $(LIB_DIR)
 
 clean:

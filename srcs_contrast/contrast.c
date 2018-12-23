@@ -37,7 +37,7 @@ void	contrast_chunk(t_env *env, char *chunk)
 	y = 0;
 	if (!(new = (char*)ft_memalloc(ft_strlen(chunk) * sizeof(char))))
 		ft_err_exit("read_chunk : malloc error");
-	while (chunk[y])
+	while (chunk[++y])
 	{
 		nb = 0;
 		if (ft_isdigit(chunk[y]))
@@ -49,7 +49,6 @@ void	contrast_chunk(t_env *env, char *chunk)
 		}
 		else
 			new[++i] = chunk[y];
-		y++;
 	}
 	ft_strdel(&chunk);
 	ft_dprintf(env->output_fd, "%s", new);
