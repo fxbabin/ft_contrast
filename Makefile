@@ -30,7 +30,7 @@ SRC_CTH 		=   $(patsubst %, $(SRC_CONTH)/%.c, $(CONTH))
 SRC_CTH			+=  $(SRC)
 
 CC				=	gcc
-FLAGS			=	-Wall -Werror -Wextra
+CFLAGS			=	-Wall -Werror -Wextra
 
 INCLUDES		=	includes
 SRC_DIR			=	srcs_contrast
@@ -53,11 +53,11 @@ _END=\x1b[0m
 all: libft/libft.a $(HEADER) $(NAME) $(NAME2)
 
 $(NAME): $(LIB) $(OBJS_C)
-		@$(CC) -fsanitize=address $(CFLAGS) -o $(NAME) $(OBJS_C) -L$(LIB_DIR) -lft
+		@$(CC) $(CFLAGS) -o $(NAME) $(OBJS_C) -L$(LIB_DIR) -lft
 		@echo $@ ": $(_GREEN)Done$(_END)"
 
 $(NAME2): $(LIB) $(OBJS_CTH)
-		@$(CC) -fsanitize=address $(CFLAGS) -o $(NAME2) $(OBJS_CTH) -L$(LIB_DIR) -lft
+		@$(CC) $(CFLAGS) -o $(NAME2) $(OBJS_CTH) -L$(LIB_DIR) -lft
 		@echo $@ ": $(_GREEN)Done$(_END)"
 
 $(OBJ_DIR):

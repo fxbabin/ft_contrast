@@ -19,8 +19,6 @@ int		main(int argc, char **argv)
 	env.contrast = -1;
 	env.input_fd = -1;
 	env.output_fd = -1;
-	env.max_contrast = -1;
-	env.line_len = 0;
 	env.queue = NULL;
 	if (argc != 7)
 		ft_usage();

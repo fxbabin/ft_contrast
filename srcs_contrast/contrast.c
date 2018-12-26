@@ -34,8 +34,8 @@ void	contrast_chunk(t_env *env, char *chunk)
 	int		y;
 
 	i = -1;
-	y = 0;
-	if (!(new = (char*)ft_memalloc(ft_strlen(chunk) * sizeof(char))))
+	y = -1;
+	if (!(new = (char*)ft_memalloc((ft_strlen(chunk) + 1) * sizeof(char))))
 		ft_err_exit("read_chunk : malloc error");
 	while (chunk[++y])
 	{

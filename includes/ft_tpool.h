@@ -30,8 +30,6 @@ typedef struct		s_env
 	int				contrast;
 	int				input_fd;
 	int				output_fd;
-	int				max_contrast;
-	int				line_len;
 	pthread_t 		callThd[NB_THREADS];
     pthread_mutex_t mutexsum;
     pthread_attr_t 	attr;
