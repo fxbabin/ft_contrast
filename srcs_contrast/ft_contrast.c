@@ -14,18 +14,12 @@
 
 int		main(int argc, char **argv)
 {
-	t_env	env;
-
-	env.contrast = -1;
-	env.input_fd = -1;
-	env.output_fd = -1;
-	env.queue = NULL;
 	if (argc != 7)
 		ft_usage();
-	if (!check_arguments(argc, argv, &env))
+	if (!check_arguments(argc, argv))
 		ft_usage();
-	process_file(&env);
-	close(env.input_fd);
-	ft_qdel(&(env.queue));
+	process_file();
+	close(g_env.input_fd);
+	ft_qdel(&(g_env.queue));
 	return (0);
 }

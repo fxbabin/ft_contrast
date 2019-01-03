@@ -33,13 +33,18 @@ typedef struct		s_env
 	pthread_t 		callThd[NB_THREADS];
     pthread_mutex_t mutexsum;
     pthread_attr_t 	attr;
+	void			*status;
 	t_queue			*queue;
 }					t_env;
 
+t_env				g_env;
+
 void				ft_usage(void);
-int					check_arguments(int argc, char **argv, t_env *env);
-void				contrast_chunk(t_env *env, char *chunk);
-void				process_file(t_env *env);
+int					check_arguments(int argc, char **argv);
+void				*contrast_chunk(void *chunk);
+void				process_header(void);
+char				*read_chunk(char *buff, int ret);
+void				process_file(void);
 void				ft_err_exit(char *str);
 void				ft_enqueue(t_queue **queue, char *chunk);
 char				*ft_dequeue(t_queue **queue);

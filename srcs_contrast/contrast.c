@@ -26,8 +26,9 @@ void	ft_putnbr_str(char *str, int nb, int *idx)
 	}
 }
 
-void	contrast_chunk(t_env *env, char *chunk)
+void	*contrast_chunk(void *chunk)
 {
+	char	*tmp;
 	char	*new;
 	int		nb;
 	int		i;
@@ -35,22 +36,28 @@ void	contrast_chunk(t_env *env, char *chunk)
 
 	i = -1;
 	y = -1;
-	if (!(new = (char*)ft_memalloc((ft_strlen(chunk) + 1) * sizeof(char))))
+	tmp = (char*)chunk;
+	if (!(new = (char*)ft_memalloc((ft_strlen(tmp) + 1) * sizeof(char))))
 		ft_err_exit("read_chunk : malloc error");
-	while (chunk[++y])
+	while (tmp[++y])
 	{
 		nb = 0;
-		if (ft_isdigit(chunk[y]))
+		if (ft_isdigit(tmp[y]))
 		{
-			while (ft_isdigit(chunk[y]))
-				nb = nb * 10 + (chunk[y++] - '0');
+			while (ft_isdigit(tmp[y]))
+				nb = nb * 10 + (tmp[y++] - '0');
 			y -= 1;
-			ft_putnbr_str(new, (nb * (env->contrast / 100.0)), &i);
+			//pthread_mutex_lock(&g_env.mutexsum);
+			ft_putnbr_str(new, (nb * (g_env.contrast / 100.0)), &i);
+			//pthread_mutex_unlock(&g_env.mutexsum);
 		}
 		else
-			new[++i] = chunk[y];
+			new[++i] = tmp[y];
 	}
-	ft_strdel(&chunk);
-	ft_dprintf(env->output_fd, "%s", new);
+	ft_strdel(&tmp);
+	pthread_mutex_lock(&g_env.mutexsum);
+	ft_dprintf(g_env.output_fd, "%s", new);
+	pthread_mutex_unlock(&g_env.mutexsum);
 	ft_strdel(&new);
+	return (NULL);
 }
