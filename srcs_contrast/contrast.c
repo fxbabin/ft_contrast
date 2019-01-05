@@ -50,6 +50,6 @@ void	contrast_chunk(char **chunk)
 		else
 			new[++i] = (*chunk)[y];
 	}
-	//ft_strdel(chunk);
+	ft_strdel(chunk);
 	*chunk = new;
 }

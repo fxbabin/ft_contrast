@@ -6,7 +6,7 @@
 /*   By: fbabin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 21:08:02 by fbabin            #+#    #+#             */
-/*   Updated: 2018/12/23 11:58:36 by fbabin           ###   ########.fr       */
+/*   Updated: 2019/01/05 17:43:54 by fbabin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,15 +68,16 @@ void	get_file_chunks(void)
 	}
 	close(g_env.input_fd);
 }
+
 void	write_chunks(void)
 {
 	t_list		*chunks_tmp;
-	
+
 	chunks_tmp = g_env.chunks;
 	while (chunks_tmp)
 	{
 		ft_putstr_fd(chunks_tmp->content, g_env.output_fd);
 		chunks_tmp = chunks_tmp->next;
 	}
-	ft_lstdel(&(g_env.chunks) , ft_elemdel);
+	ft_lstdel(&(g_env.chunks), ft_elemdel);
 }
