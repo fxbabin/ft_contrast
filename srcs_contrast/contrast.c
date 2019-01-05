@@ -26,7 +26,7 @@ void	ft_putnbr_str(char *str, int nb, int *idx)
 	}
 }
 
-void	*contrast_chunk(void *chunk)
+void	*contrast_chunk(t_args *args)//void *chunk)
 {
 	char	*tmp;
 	char	*new;
@@ -36,7 +36,7 @@ void	*contrast_chunk(void *chunk)
 
 	i = -1;
 	y = -1;
-	tmp = (char*)chunk;
+	tmp = (char*)args->chunk;
 	if (!(new = (char*)ft_memalloc((ft_strlen(tmp) + 1) * sizeof(char))))
 		ft_err_exit("read_chunk : malloc error");
 	while (tmp[++y])
@@ -56,6 +56,8 @@ void	*contrast_chunk(void *chunk)
 	}
 	ft_strdel(&tmp);
 	//pthread_mutex_lock(&g_env.mutexsum);
+	while (g_env.curr_th != args->th_nb)
+	;
 	ft_dprintf(g_env.output_fd, "%s", new);
 	//pthread_mutex_unlock(&g_env.mutexsum);
 	ft_strdel(&new);
