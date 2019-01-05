@@ -52,32 +52,31 @@ char	*read_chunk(char *buff, int ret)
 	return (chunk);
 }
 
-void	process_queue(t_queue **queue)
-{
-	char	*tmp;
-
-	while ((tmp = ft_dequeue(queue)))
-	{
-		contrast_chunk(tmp);
-	}
-}
-
-void	process_file(void)
+void	get_file_chunks(void)
 {
 	char		buff[BUF_SIZE + 1];
-	t_queue		*chunk_queue;
 	char		*chunk;
 	int			ret;
 
 	ret = 0;
 	chunk = NULL;
-	chunk_queue = NULL;
 	process_header();
 	while ((ret = read(g_env.input_fd, buff, BUF_SIZE)) > 0)
 	{
 		chunk = read_chunk(buff, ret);
-		ft_enqueue(&chunk_queue, chunk);
+		ft_lstpushback(&(g_env.chunks), chunk, 0);
 	}
-	process_queue(&chunk_queue);
-	ft_qdel(&chunk_queue);
+	close(g_env.input_fd);
+}
+void	write_chunks(void)
+{
+	t_list		*chunks_tmp;
+	
+	chunks_tmp = g_env.chunks;
+	while (chunks_tmp)
+	{
+		ft_dprintf(g_env.output_fd, "%s", chunks_tmp->content);
+		chunks_tmp = chunks_tmp->next;
+	}
+	ft_lstdel(&(g_env.chunks) , ft_elemdel);
 }

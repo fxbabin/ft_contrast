@@ -13,7 +13,7 @@
 NAME			=	ft_contrast
 NAME2			=   ft_contrast_th
 
-COMMON 			=	ft_queue contrast read_content check
+COMMON 			=	utils contrast read_content check
 CONT			=	ft_contrast
 CONTH			=	ft_contrast_th
 
@@ -30,7 +30,7 @@ SRC_CTH 		=   $(patsubst %, $(SRC_CONTH)/%.c, $(CONTH))
 SRC_CTH			+=  $(SRC)
 
 CC				=	gcc
-CFLAGS			=	-Wall -Werror -Wextra
+CFLAGS			=	-Wall -Werror -Wextra -g3
 
 INCLUDES		=	includes
 SRC_DIR			=	srcs_contrast

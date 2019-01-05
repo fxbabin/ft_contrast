@@ -19,41 +19,42 @@
 
 # define NB_THREADS 4
 
-typedef struct		s_queue
+/*typedef struct		s_queue
 {
 	char			*chunk;
 	struct s_queue	*next;
 }					t_queue;
+*/
 
-typedef struct		s_args
+/*typedef struct		s_args
 {
 	char			*chunk;
 	int				th_nb;
 }					t_args;
+*/
 
 typedef struct		s_env
 {
 	int				contrast;
 	int				input_fd;
 	int				output_fd;
+	t_list			*chunks;
 	pthread_t 		callThd[NB_THREADS];
     pthread_mutex_t mutexsum;
     pthread_attr_t 	attr;
 	void			*status;
-	t_queue			*queue;
 }					t_env;
 
 t_env				g_env;
 
 void				ft_usage(void);
-int					check_arguments(int argc, char **argv);
-void				*contrast_chunk(void *chunk);
-void				process_header(void);
-char				*read_chunk(char *buff, int ret);
-void				process_file(void);
 void				ft_err_exit(char *str);
-void				ft_enqueue(t_queue **queue, char *chunk);
-char				*ft_dequeue(t_queue **queue);
-void				ft_qdel(t_queue **queue);
+int					check_arguments(int argc, char **argv);
+
+
+void				get_file_chunks(void);
+void				write_chunks(void);
+
+void				contrast_chunk(char **chunk);
 
 #endif
