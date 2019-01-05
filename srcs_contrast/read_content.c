@@ -75,7 +75,7 @@ void	write_chunks(void)
 	chunks_tmp = g_env.chunks;
 	while (chunks_tmp)
 	{
-		ft_dprintf(g_env.output_fd, "%s", chunks_tmp->content);
+		ft_putstr_fd(chunks_tmp->content, g_env.output_fd);
 		chunks_tmp = chunks_tmp->next;
 	}
 	ft_lstdel(&(g_env.chunks) , ft_elemdel);

@@ -27,7 +27,7 @@
 ** --------------------------------- DEFINES ---------------------------------
 */
 
-# define BUFF_SIZE	128
+# define BUFF_SIZE	40960
 # define RED		0xE71010
 # define LRED		0xF3664D
 # define GREEN		0x219A25
