@@ -25,6 +25,12 @@ typedef struct		s_queue
 	struct s_queue	*next;
 }					t_queue;
 
+typedef struct		s_args
+{
+	char			*chunk;
+	int				th_nb;
+}					t_args;
+
 typedef struct		s_env
 {
 	int				contrast;

@@ -12,6 +12,8 @@
 
 #include "ft_tpool.h"
 
+
+
 int a = 0 ;
 void *funcc(void *arg)
 {

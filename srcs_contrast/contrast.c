@@ -55,9 +55,9 @@ void	*contrast_chunk(void *chunk)
 			new[++i] = tmp[y];
 	}
 	ft_strdel(&tmp);
-	pthread_mutex_lock(&g_env.mutexsum);
+	//pthread_mutex_lock(&g_env.mutexsum);
 	ft_dprintf(g_env.output_fd, "%s", new);
-	pthread_mutex_unlock(&g_env.mutexsum);
+	//pthread_mutex_unlock(&g_env.mutexsum);
 	ft_strdel(&new);
 	return (NULL);
 }
