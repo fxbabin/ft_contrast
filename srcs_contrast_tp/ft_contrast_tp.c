@@ -10,9 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "ft_contrast.h"
-
 
 void	*pthread_contrast(void *chunk)
 {
@@ -32,8 +30,8 @@ void	process_chunks_th(int nb_threads)
 	chunks_tmp = g_env.chunks;
 	while (chunks_tmp)
 	{
-		pthread_create(&(g_th_env.callThd[++i]), &(g_th_env.attr), pthread_contrast,
-			(void*)&(chunks_tmp->content));
+		pthread_create(&(g_th_env.callThd[++i]), &(g_th_env.attr),
+			pthread_contrast, (void*)&(chunks_tmp->content));
 		if (i == nb_threads - 1)
 		{
 			y = -1;
@@ -47,37 +45,27 @@ void	process_chunks_th(int nb_threads)
 
 int		main(int argc, char **argv)
 {
+	t_tpool		*g_tpool;
 	t_list		*tmp;
 
 	if (argc != 7)
 		ft_usage();
 	if (!check_arguments(argc, argv))
 		ft_usage();
-	tp_create(4);
+	g_tpool = tp_create(4);
 	get_file_chunks();
 	tmp = g_env.chunks;
 	while(tmp)
 	{
-		//ft_printf("%s\n", tmp->content);
 		tp_exec_queue_add((void*)&(tmp->content), (void*)(void*)contrast_chunk);
 		tmp = tmp->next;
-		//ft_putstr("rr");
 	}
-	/*ft_putstr("ff\n");
-	t_task	*dd;
-	char	**d;
-
-	while ((dd = ft_task_dequeue(&g_task_q)) != NULL)
-	{
-		d = (char**)dd->args;
-		ft_printf("%s\n", *d);
-	}*/
-		
 	tp_wait_for_queue();
-	//write_chunks();
-	/*process_chunks_th(4);
-	
-	pthread_attr_destroy(&(g_th_env.attr));/*/
+	write_chunks();
+	pthread_attr_destroy(&(g_tpool->attr));
 	pthread_exit(NULL);
+	ft_lstdel(&(g_env.chunks), ft_elemdel);
+	close(g_env.input_fd);
+	close(g_env.output_fd);
 	return (0);
 }

@@ -6,7 +6,7 @@
 #    By: fbabin <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/21 20:52:27 by fbabin            #+#    #+#              #
-#    Updated: 2018/12/21 20:52:35 by fbabin           ###   ########.fr        #
+#    Updated: 2019/01/13 19:32:20 by fbabin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ SRC_CTP 		=   $(patsubst %, $(SRC_CONTP)/%.c, $(CONTP))
 SRC_CTP			+=  $(SRC)
 
 CC				=	gcc
-CFLAGS			=	-Wall -Werror -Wextra -g3
+CFLAGS			=	-Wall -Werror -Wextra -Ofast
 
 INCLUDES		=	includes
 SRC_DIR			=	srcs_contrast

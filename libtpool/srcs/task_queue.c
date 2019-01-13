@@ -12,23 +12,24 @@
 
 #include "ft_tpool.h"
 
-t_task_q      *ft_task_q_create(void *args, void (*func)(void*))
+t_task_q		*ft_task_q_create(void *args, void (*func)(void*))
 {
-    t_task_q        *task_q;
-    t_task          *task;
+	t_task_q		*task_q;
+	t_task			*task;
 
-    if (!(task_q = (t_task_q*)malloc(sizeof(t_task_q))))
-        return (NULL);
-    if (!(task = (t_task*)malloc(sizeof(t_task))))
-        return (NULL);
-    task->args = args;
-    task->func = func;
-    task_q->task = task;
-    task_q->next = NULL;
-    return (task_q);
+	if (!(task_q = (t_task_q*)malloc(sizeof(t_task_q))))
+		return (NULL);
+	if (!(task = (t_task*)malloc(sizeof(t_task))))
+		return (NULL);
+	task->args = args;
+	task->func = func;
+	task_q->task = task;
+	task_q->next = NULL;
+	return (task_q);
 }
 
-void		ft_task_enqueue(t_task_q **task_queue, void *args, void (*func)(void*))
+void		ft_task_enqueue(t_task_q **task_queue,
+				void *args, void (*func)(void*))
 {
 	t_task_q		*tmp;
 
@@ -45,16 +46,16 @@ void		ft_task_enqueue(t_task_q **task_queue, void *args, void (*func)(void*))
 		*task_queue = ft_task_q_create(args, func);
 }
 
-t_task      *ft_task_dequeue(t_task_q **task_queue)
+t_task		*ft_task_dequeue(t_task_q **task_queue)
 {
-    t_task_q    *tmp;
-    t_task      *ret;
+	t_task_q	*tmp;
+	t_task		*ret;
 
-    if (!task_queue || !*task_queue)
-        return (NULL);
-    tmp = *task_queue;
-    ret = (tmp) ? tmp->task : NULL;
-    *task_queue = (*task_queue)->next;
-    free(tmp);
-    return (ret);
+	if (!task_queue || !*task_queue)
+		return (NULL);
+	tmp = *task_queue;
+	ret = (tmp) ? tmp->task : NULL;
+	*task_queue = (*task_queue)->next;
+	free(tmp);
+	return (ret);
 }

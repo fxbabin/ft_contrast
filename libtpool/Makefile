@@ -12,7 +12,7 @@
 
 NAME			=	libtpool.a
 
-CC				=	gcc
+CC				=	gcc -Wall -Werror -Wextra
 FLAGS			=	
 
 _SRCS			=	task_queue.c ft_tpool.c

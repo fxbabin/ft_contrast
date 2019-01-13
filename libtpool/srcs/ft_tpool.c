@@ -12,60 +12,61 @@
 
 #include "../includes/ft_tpool.h"
 
-void        *task_handler(void *args)
+void		*task_handler(void *args)
 {
-    t_task      *task;
-    char        **ss;
+	t_task		*task;
+	char		**tmp;
 
-    (void)args;
-    while (42)
-    {
-        //ft_putstr("rr\n");
-        pthread_mutex_lock(&(g_tpool.mutexsum));
-        pthread_cond_wait(&(g_tpool.cond_signal), &(g_tpool.mutexsum));
-        ft_putstr_fd("rsr\n", 2);
-        if (g_task_q->task == NULL)
+	(void)args;
+	while (42)
+	{
+		pthread_mutex_trylock(&(g_tpool->mutexsum));
+		pthread_cond_wait(&(g_tpool->cond_signal), &(g_tpool->mutexsum));
+		if (!g_tpool->task_q)
 		{
-			pthread_mutex_unlock(&(g_tpool.mutexsum));
-			g_tpool.closed++;
+			g_tpool->closed++;
+			pthread_mutex_unlock(&(g_tpool->mutexsum));
 			return (NULL);
 		}
-        
-        task = ft_task_dequeue(&g_task_q);
-        ss = (char**)task->args;
-        pthread_mutex_unlock(&(g_tpool.mutexsum));
-        ft_printf("%s\n", *ss);
-        //task->func(ss);
-    }
-    g_tpool.closed++;
-    //pthread_mutex_unlock(&(g_tpool.mutexsum));
-    return (NULL);
+		task = ft_task_dequeue(&(g_tpool->task_q));
+		g_tpool->task_q_size -= 1;
+		tmp = (char**)task->args;
+		pthread_mutex_unlock(&(g_tpool->mutexsum));
+		task->func(tmp);
+	}
+	g_tpool->closed++;
+	pthread_mutex_unlock(&(g_tpool->mutexsum));
+	return (NULL);
 }
 
-void        tp_create(int nb_threads)
+t_tpool		*tp_create(int nb_threads)
 {
-    int         i;
+	int		i;
 
-    i = -1;
-    if (!(g_tpool.callThd = (pthread_t*)malloc(nb_threads * sizeof(pthread_t))))
-        return ;
-    g_tpool.closed = 0;
-    g_tpool.nb_threads = nb_threads;
-    while (++i < g_tpool.nb_threads)
-        pthread_create(&(g_tpool.callThd[i]), &(g_tpool.attr), task_handler, NULL);
-    pthread_attr_init(&(g_tpool.attr));
-    pthread_mutex_init(&(g_tpool.mutexsum), NULL);
-	pthread_cond_init(&(g_tpool.cond_signal), NULL);
+	i = -1;
+	if(!(g_tpool = (t_tpool*)malloc(sizeof(t_tpool))))
+		exit(-1);
+	g_tpool->task_q = NULL;
+	if (!(g_tpool->callThd =
+		(pthread_t*)malloc(nb_threads * sizeof(pthread_t))))
+		exit(-1);
+	g_tpool->nb_threads = nb_threads;
+    g_tpool->closed = 0;
+	g_tpool->task_q_size = 0;
+	pthread_mutex_init(&(g_tpool->mutexsum), NULL);
+	pthread_cond_init(&(g_tpool->cond_signal), NULL);
+	while (++i < g_tpool->nb_threads)
+		pthread_create(&(g_tpool->callThd[i]), NULL, task_handler, NULL);
+	return (g_tpool);
 }
 
-void        tp_exec_queue_add(void *args, void (*func)(void*))
+void		tp_exec_queue_add(void *args, void (*func)(void*))
 {
-    char    **d;
+	char	**tmp;
 
-    d = (char**)args;
-    //ft_printf(">%d\n", ft_strlen(((char*)(*d))));
-    ft_task_enqueue(&g_task_q, (void*)(d), func);
-    //pthread_cond_signal(&(g_tpool.cond_signal));
+	tmp = (char**)args;
+	ft_task_enqueue(&(g_tpool->task_q), (void*)(tmp), func);
+	g_tpool->task_q_size += 1;
 }
 
 void		tp_wait_for_queue(void)
@@ -73,13 +74,8 @@ void		tp_wait_for_queue(void)
 	int		i;
 
 	i = -1;
-    while (g_tpool.closed < g_tpool.nb_threads)
-	{
-        pthread_cond_signal(&(g_tpool.cond_signal));
-        ft_putstr_fd("rsr\n", 2);
-        g_tpool.closed++;
-    }	
-	while (++i < g_tpool.nb_threads)
-		pthread_join(g_tpool.callThd[i], NULL);
-    pthread_attr_destroy(&(g_tpool.attr));
+	while (g_tpool->closed < g_tpool->nb_threads)
+		pthread_cond_signal(&(g_tpool->cond_signal));
+	while (++i < g_tpool->nb_threads)
+		pthread_join(g_tpool->callThd[i], NULL);
 }
