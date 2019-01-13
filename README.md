@@ -1,6 +1,6 @@
 # ft_contrast
 
-![Screenshot](imgs/hands.png =250x)
+![](imgs/hands.png =100x20)
 
 Libunit is a 42 rush project (project realised on a week-end) consisting in building a library for unitary testing in C. The rush was realized by me (fbabin) and bleplat.
 
