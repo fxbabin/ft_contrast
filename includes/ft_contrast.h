@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_tpool.h                                         :+:      :+:    :+:   */
+/*   ft_contrast.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fbabin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,26 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_TPOOL_H
-# define FT_TPOOL_H
+#ifndef FT_CONTRAST_H
+# define FT_CONTRAST_H
 
-# include <stdio.h>
 # include <pthread.h>
 # include "../libft/includes/libft.h"
-
-# define NB_THREADS 4
-
-typedef struct			s_task
-{
-	void				*function;
-	void				*args;
-}						t_task;
-
-typedef struct			s_task_q
-{
-	t_task				*task;
-	struct s_task_q		*next;
-}						t_task_q;
+# include "../libtpool/includes/ft_tpool.h"
 
 typedef struct			s_env
 {
@@ -37,13 +23,18 @@ typedef struct			s_env
 	int					input_fd;
 	int					output_fd;
 	t_list				*chunks;
-	pthread_t 			callThd[NB_THREADS];
+}						t_env;
+
+typedef struct			s_th_env
+{
+	pthread_t 			*callThd;
 	pthread_mutex_t 	mutexsum;
 	pthread_attr_t 		attr;
 	void				*status;
-}						t_env;
+}						t_th_env;
 
 t_env					g_env;
+t_th_env				g_th_env;
 
 void					ft_usage(void);
 void					ft_err_exit(char *str);
