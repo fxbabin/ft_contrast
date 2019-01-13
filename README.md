@@ -7,6 +7,6 @@ ft_contrast is a 42 rush project (project realised on a week-end) consisting in 
 
 | Program   | Description |
 | -------- | -------------- |
-| ft_contrast  | OK             |
-| ft_contrast_th  | OK             |
-| ft_contrast_tp  | OK             |
+| ft_contrast  | A simple contrast program             |
+| ft_contrast_th  | A contrast program using multithreading             |
+| ft_contrast_tp  | A contrast program using the multithreading pool (from tpool library)            |
