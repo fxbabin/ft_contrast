@@ -15,6 +15,6 @@ libtpool has three different functions to create a threadpool, add tasks and wai
 
 ```
 t_tpool		*tp_create(int nb_threads);
-void			tp_exec_queue_add(void *args, void (*func)(void*));
-void			tp_wait_for_queue(void);
+void		tp_exec_queue_add(void *args, void (*func)(void*));
+void		tp_wait_for_queue(void);
 ```
