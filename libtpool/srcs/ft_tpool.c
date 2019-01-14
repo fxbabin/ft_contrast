@@ -19,7 +19,7 @@ void		*task_handler(void *args)
 	(void)args;
 	while (42)
 	{
-		pthread_mutex_trylock(&(g_tpool->mutexsum));
+		pthread_mutex_lock(&(g_tpool->mutexsum));
 		pthread_cond_wait(&(g_tpool->cond_signal), &(g_tpool->mutexsum));
 		if (!g_tpool->task_q)
 			break ;

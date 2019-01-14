@@ -35,7 +35,7 @@ SRC_CTP 		=   $(patsubst %, $(SRC_CONTP)/%.c, $(CONTP))
 SRC_CTP			+=  $(SRC)
 
 CC				=	gcc
-CFLAGS			=	-Wall -Werror -Wextra -Ofast
+CFLAGS			=	-Wall -Werror -Wextra
 
 INCLUDES		=	includes
 SRC_DIR			=	srcs_contrast
