@@ -6,7 +6,7 @@
 /*   By: fbabin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/06 14:36:16 by fbabin            #+#    #+#             */
-/*   Updated: 2019/01/06 15:22:12 by fbabin           ###   ########.fr       */
+/*   Updated: 2019/01/14 18:48:52 by fbabin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,10 @@ int		main(int argc, char **argv)
 	g_tpool = tp_create(4);
 	get_file_chunks();
 	tmp = g_env.chunks;
-	while(tmp)
+	while (tmp)
 	{
-		tp_exec_queue_add((void*)&(tmp->content), (void*)(void*)pthread_contrast);
+		tp_exec_queue_add((void*)&(tmp->content),
+			(void*)(void*)pthread_contrast);
 		tmp = tmp->next;
 	}
 	tp_wait_for_queue();

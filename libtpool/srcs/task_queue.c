@@ -6,7 +6,7 @@
 /*   By: fbabin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 21:08:02 by fbabin            #+#    #+#             */
-/*   Updated: 2019/01/05 17:43:54 by fbabin           ###   ########.fr       */
+/*   Updated: 2019/01/14 18:47:19 by fbabin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ t_task_q		*ft_task_q_create(void *args, void (*func)(void*))
 	return (task_q);
 }
 
-void		ft_task_enqueue(t_task_q **task_queue,
-				void *args, void (*func)(void*))
+void			ft_task_enqueue(t_task_q **task_queue,
+					void *args, void (*func)(void*))
 {
 	t_task_q		*tmp;
 
@@ -46,7 +46,7 @@ void		ft_task_enqueue(t_task_q **task_queue,
 		*task_queue = ft_task_q_create(args, func);
 }
 
-t_task		*ft_task_dequeue(t_task_q **task_queue)
+t_task			*ft_task_dequeue(t_task_q **task_queue)
 {
 	t_task_q	*tmp;
 	t_task		*ret;

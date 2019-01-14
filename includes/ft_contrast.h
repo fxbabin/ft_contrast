@@ -6,7 +6,7 @@
 /*   By: fbabin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/23 10:34:09 by fbabin            #+#    #+#             */
-/*   Updated: 2019/01/06 14:52:33 by fbabin           ###   ########.fr       */
+/*   Updated: 2019/01/14 18:45:30 by fbabin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ typedef struct			s_env
 
 typedef struct			s_th_env
 {
-	pthread_t 			*callThd;
-	pthread_mutex_t 	mutexsum;
-	pthread_attr_t 		attr;
+	pthread_t			*threads;
+	pthread_mutex_t		mutexsum;
+	pthread_attr_t		attr;
 	void				*status;
 }						t_th_env;
 

@@ -6,7 +6,7 @@
 /*   By: fbabin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 21:08:02 by fbabin            #+#    #+#             */
-/*   Updated: 2019/01/05 17:43:54 by fbabin           ###   ########.fr       */
+/*   Updated: 2019/01/14 18:48:05 by fbabin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +37,19 @@ t_tpool		*tp_create(int nb_threads)
 	int		i;
 
 	i = -1;
-	if(!(g_tpool = (t_tpool*)malloc(sizeof(t_tpool))))
+	if (!(g_tpool = (t_tpool*)malloc(sizeof(t_tpool))))
 		exit(-1);
 	g_tpool->task_q = NULL;
-	if (!(g_tpool->callThd =
+	if (!(g_tpool->threads =
 		(pthread_t*)malloc(nb_threads * sizeof(pthread_t))))
 		exit(-1);
 	g_tpool->nb_threads = nb_threads;
-    g_tpool->closed = 0;
+	g_tpool->closed = 0;
 	g_tpool->task_q_size = 0;
 	pthread_mutex_init(&(g_tpool->mutexsum), NULL);
 	pthread_cond_init(&(g_tpool->cond_signal), NULL);
 	while (++i < g_tpool->nb_threads)
-		pthread_create(&(g_tpool->callThd[i]), NULL, task_handler, NULL);
+		pthread_create(&(g_tpool->threads[i]), NULL, task_handler, NULL);
 	return (g_tpool);
 }
 
@@ -67,5 +67,5 @@ void		tp_wait_for_queue(void)
 	while (g_tpool->closed < g_tpool->nb_threads)
 		pthread_cond_signal(&(g_tpool->cond_signal));
 	while (++i < g_tpool->nb_threads)
-		pthread_join(g_tpool->callThd[i], NULL);
+		pthread_join(g_tpool->threads[i], NULL);
 }

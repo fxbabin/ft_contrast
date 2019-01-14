@@ -25,19 +25,19 @@ void	process_chunks_th(int nb_threads)
 	int			y;
 
 	i = -1;
-	if (!(g_th_env.callThd = \
+	if (!(g_th_env.threads = \
 		(pthread_t*)malloc(nb_threads * sizeof(pthread_t))))
 		return ;
 	chunks_tmp = g_env.chunks;
 	while (chunks_tmp)
 	{
-		pthread_create(&(g_th_env.callThd[++i]), &(g_th_env.attr), \
+		pthread_create(&(g_th_env.threads[++i]), &(g_th_env.attr), \
 			pthread_contrast, (void*)&(chunks_tmp->content));
 		if (i == nb_threads - 1)
 		{
 			y = -1;
 			while (++y < nb_threads)
-				pthread_join(g_th_env.callThd[y], &(g_th_env.status));
+				pthread_join(g_th_env.threads[y], &(g_th_env.status));
 			i = -1;
 		}
 		chunks_tmp = chunks_tmp->next;
