@@ -94,6 +94,7 @@ clean:
 		@make fclean -C $(LIBTPOOL_DIR)
 		@/bin/rm -f $(OBJS_C)
 		@/bin/rm -f $(OBJS_CTH)
+		@/bin/rm -f $(OBJS_CTP)
 		@/bin/rm -rf $(OBJ_DIR)
 		@echo $@ ": $(_GREEN)Done$(_END)"
 

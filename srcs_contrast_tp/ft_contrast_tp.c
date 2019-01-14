@@ -18,31 +18,6 @@ void	*pthread_contrast(void *chunk)
 	return (NULL);
 }
 
-void	process_chunks_th(int nb_threads)
-{
-	t_list		*chunks_tmp;
-	int			i;
-	int			y;
-
-	i = -1;
-	if (!(g_th_env.callThd = (pthread_t*)malloc(nb_threads * sizeof(pthread_t))))
-		return ;
-	chunks_tmp = g_env.chunks;
-	while (chunks_tmp)
-	{
-		pthread_create(&(g_th_env.callThd[++i]), &(g_th_env.attr),
-			pthread_contrast, (void*)&(chunks_tmp->content));
-		if (i == nb_threads - 1)
-		{
-			y = -1;
-			while (++y < nb_threads)
-				pthread_join(g_th_env.callThd[y], &(g_th_env.status));
-			i = -1;
-		}
-		chunks_tmp = chunks_tmp->next;
-	}
-}
-
 int		main(int argc, char **argv)
 {
 	t_tpool		*g_tpool;
@@ -57,13 +32,11 @@ int		main(int argc, char **argv)
 	tmp = g_env.chunks;
 	while(tmp)
 	{
-		tp_exec_queue_add((void*)&(tmp->content), (void*)(void*)contrast_chunk);
+		tp_exec_queue_add((void*)&(tmp->content), (void*)(void*)pthread_contrast);
 		tmp = tmp->next;
 	}
 	tp_wait_for_queue();
 	write_chunks();
-	pthread_attr_destroy(&(g_tpool->attr));
-	pthread_exit(NULL);
 	ft_lstdel(&(g_env.chunks), ft_elemdel);
 	close(g_env.input_fd);
 	close(g_env.output_fd);

@@ -15,7 +15,6 @@
 void		*task_handler(void *args)
 {
 	t_task		*task;
-	char		**tmp;
 
 	(void)args;
 	while (42)
@@ -23,16 +22,10 @@ void		*task_handler(void *args)
 		pthread_mutex_trylock(&(g_tpool->mutexsum));
 		pthread_cond_wait(&(g_tpool->cond_signal), &(g_tpool->mutexsum));
 		if (!g_tpool->task_q)
-		{
-			g_tpool->closed++;
-			pthread_mutex_unlock(&(g_tpool->mutexsum));
-			return (NULL);
-		}
+			break ;
 		task = ft_task_dequeue(&(g_tpool->task_q));
-		g_tpool->task_q_size -= 1;
-		tmp = (char**)task->args;
 		pthread_mutex_unlock(&(g_tpool->mutexsum));
-		task->func(tmp);
+		task->func(task->args);
 	}
 	g_tpool->closed++;
 	pthread_mutex_unlock(&(g_tpool->mutexsum));
@@ -62,10 +55,7 @@ t_tpool		*tp_create(int nb_threads)
 
 void		tp_exec_queue_add(void *args, void (*func)(void*))
 {
-	char	**tmp;
-
-	tmp = (char**)args;
-	ft_task_enqueue(&(g_tpool->task_q), (void*)(tmp), func);
+	ft_task_enqueue(&(g_tpool->task_q), args, func);
 	g_tpool->task_q_size += 1;
 }
 
